@@ -1,6 +1,6 @@
 {
   "name": "nodejs-mongodb-backend-template",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "app.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "author": "Mahdad Ghasemian",
   "license": "ISC",
   "dependencies": {
-    "restful-server": "file:./restful-server"
+    "infrastructure": "file:../infrastructure"
   },
   "devDependencies": {
     "dotenv": "^8.2.0"
