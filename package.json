@@ -1,6 +1,6 @@
 {
   "name": "nodejs-mongodb-backend-template",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "",
   "main": "app.js",
   "engines": {
