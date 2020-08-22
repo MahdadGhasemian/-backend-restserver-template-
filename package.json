@@ -1,6 +1,6 @@
 {
   "name": "nodejs-mongodb-backend-template",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "",
   "main": "app.js",
   "engines": {
@@ -14,7 +14,8 @@
     "build-infrastructure-heroku": "npm install --prefix infrastructure",
     "build-database-heroku": "npm install --prefix database",
     "build-restful-server-heroku": "npm install --prefix restful-server",
-    "preinstall": "npm run build-infrastructure-heroku && npm run build-database-heroku && npm run build-restful-server-heroku",
+    "remove-package-lock": "rm package-lock.json",
+    "preinstall": "npm run remove-package-lock && npm run build-infrastructure-heroku && npm run build-database-heroku && npm run build-restful-server-heroku",
     "start": "node ./app.js",
     "dev": "node -r dotenv/config ./app.js"
   },
