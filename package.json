@@ -1,10 +1,11 @@
 {
   "name": "nodejs-mongodb-backend-template",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "",
   "main": "app.js",
   "engines": {
-    "node": "12.x"
+    "node": "12.x",
+    "npm": "6.x"
   },
   "scripts": {
     "build-infrastructure": "cd ./infrastructure && npm i",
