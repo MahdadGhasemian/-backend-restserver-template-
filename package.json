@@ -1,6 +1,6 @@
 {
   "name": "nodejs-mongodb-backend-template",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "",
   "main": "app.js",
   "engines": {
@@ -8,19 +8,13 @@
     "npm": "6.x"
   },
   "scripts": {
-    "build-infrastructure": "cd ./infrastructure && npm i",
-    "build-database": "cd ./database && npm i",
-    "build-restful-server": "cd ./restful-server && npm i",
-    "build-infrastructure-heroku": "npm install --prefix infrastructure",
-    "build-database-heroku": "npm install --prefix database",
-    "build-restful-server-heroku": "npm install --prefix restful-server",
     "start": "node ./app.js",
     "dev": "node -r dotenv/config ./app.js"
   },
   "author": "Mahdad Ghasemian",
   "license": "ISC",
   "dependencies": {
-    "restful-server": "file:./restful-server"
+    "restful-server": "file:restful-server"
   },
   "devDependencies": {
     "dotenv": "^8.2.0"
