@@ -3,6 +3,9 @@
   "version": "1.0.6",
   "description": "",
   "main": "app.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "build-infrastructure": "cd ./infrastructure && npm i",
     "build-database": "cd ./database && npm i",
