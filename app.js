@@ -1,5 +1,5 @@
 "use strict";
 
-var restfulServer = require("./src/restfulServer");
+const restfulServer = require("restful-server");
 
 restfulServer.startListening();
