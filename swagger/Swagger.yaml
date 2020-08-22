@@ -1,0 +1,1312 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: REST APi for "Template services"
+  description: ""
+  contact:
+    name: Mahdad Gahsemian
+    email: mahdad.ghasemian@gamil.com
+tags:
+  - name: user
+    description: کاربران سیستم
+  - name: delivery
+    description: برنامه ریزی حمل و نقل
+  - name: product
+    description: مواد اولیه و خروجی
+  - name: driver
+    description: رانندگان
+  - name: customer
+    description: مشتریان
+  - name: car
+    description: خودروها
+  - name: setting
+    description: تنظمیات
+  - name: upload
+    description: ارسال فایل به سرور
+  - name: download
+    description: دریافت فایل از سرور
+schemes:
+  - http
+  - https
+  - ws
+  - wss
+paths:
+  /users/login:
+    post:
+      tags:
+        - user
+      description: Login user into the system
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/AuthData"
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/AuthResponse"
+        "401":
+          description: Invalid password supplied
+        "404":
+          description: User not found
+  /users/logout:
+    post:
+      tags:
+        - user
+      description: Logs out current logged in user session
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+  /users/register:
+    post:
+      tags:
+        - user
+      description: register user
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/UserRegister"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/AuthResponse"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+        "404":
+          description: super not found
+          schema:
+            $ref: "#/definitions/Error"
+        "409":
+          description: username already exists
+          schema:
+            $ref: "#/definitions/Error"
+  /users/changePassword:
+    post:
+      tags:
+        - user
+      description: User change password
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/ChangePassword"
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/AuthResponse"
+        "401":
+          description: Invalid password supplied
+        "404":
+          description: User not found
+  /users/getUserInfo:
+    post:
+      tags:
+        - user
+      description: get user info
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/UserInfo"
+        "401":
+          description: Invalid password supplied
+        "404":
+          description: User not found
+
+  /basics/driver/gets:
+    post:
+      tags:
+        - driver
+      description: get dirvers list
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: تعداد کل
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Driver"
+                maxItems: 500
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/driver/get:
+    post:
+      tags:
+        - driver
+      description: get driver
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Driver"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/driver/add:
+    post:
+      tags:
+        - driver
+      description: add driver
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Driver"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Driver"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/driver/edit:
+    post:
+      tags:
+        - driver
+      description: edit driver
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Driver"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Driver"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/driver/delete:
+    post:
+      tags:
+        - driver
+      description: delete driver
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/customer/gets:
+    post:
+      tags:
+        - customer
+      description: get customers list
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: تعداد کل
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Customer"
+                maxItems: 500
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/customer/get:
+    post:
+      tags:
+        - customer
+      description: get customer
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Customer"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/customer/add:
+    post:
+      tags:
+        - customer
+      description: add custmer
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Customer"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Customer"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/customer/edit:
+    post:
+      tags:
+        - customer
+      description: edit customer
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Customer"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Customer"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/customer/delete:
+    post:
+      tags:
+        - customer
+      description: delete customer
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/car/gets:
+    post:
+      tags:
+        - car
+      description: get cars list
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: تعداد کل
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Car"
+                maxItems: 500
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/car/get:
+    post:
+      tags:
+        - car
+      description: get car
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Car"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/car/add:
+    post:
+      tags:
+        - car
+      description: add car
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Car"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Car"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/car/edit:
+    post:
+      tags:
+        - car
+      description: edit car
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Car"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Car"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/car/delete:
+    post:
+      tags:
+        - car
+      description: delete car
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/product/gets:
+    post:
+      tags:
+        - product
+      description: get products list
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: تعداد کل
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Product"
+                maxItems: 500
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/product/get:
+    post:
+      tags:
+        - product
+      description: get product
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Product"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/product/add:
+    post:
+      tags:
+        - product
+      description: add product
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Product"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Product"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/product/edit:
+    post:
+      tags:
+        - product
+      description: edit product
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Product"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Product"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /basics/product/delete:
+    post:
+      tags:
+        - product
+      description: delete product
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+
+  /projects/delivery/gets:
+    post:
+      tags:
+        - delivery
+      description: get delivery list
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: تعداد کل
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Delivery"
+                maxItems: 500
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+  /projects/delivery/get:
+    post:
+      tags:
+        - delivery
+      description: get a delivery
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Delivery"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /projects/delivery/add:
+    post:
+      tags:
+        - delivery
+      description: add a delivery
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Delivery"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Delivery"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /projects/delivery/edit:
+    post:
+      tags:
+        - delivery
+      description: edit delivery
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Delivery"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Delivery"
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /projects/delivery/delete:
+    post:
+      tags:
+        - delivery
+      description: delete delivery
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid username/password supplied
+          schema:
+            $ref: "#/definitions/Error"
+  /projects/delivery/gets/date:
+    post:
+      tags:
+        - delivery
+      description: get delivery in specefic date
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              date:
+                $ref: "#/definitions/DateTime"
+              skip:
+                type: number
+                description: شروع
+                example: 0
+              limit:
+                type: number
+                description: تعداد
+                example: 50
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: تعداد کل
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Delivery"
+                maxItems: 500
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+  /projects/delivery/gets/dateRange:
+    post:
+      tags:
+        - delivery
+      description: get delivery in date range
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              date_start:
+                $ref: "#/definitions/DateTime"
+              date_end:
+                $ref: "#/definitions/DateTime"
+              skip:
+                type: number
+                description: شروع
+                example: 0
+              limit:
+                type: number
+                description: تعداد
+                example: 50
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: تعداد کل
+              data:
+                type: array
+                items:
+                  $ref: "#/definitions/Delivery"
+                maxItems: 500
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+
+  /setting/get:
+    post:
+      tags:
+        - setting
+      description: get setting
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: "#/definitions/Setting"
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+  /setting/save:
+    post:
+      tags:
+        - setting
+      description: save setting
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: "#/definitions/Setting"
+          required: true
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              setting_id:
+                type: string
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+  "/upload/uploadImage/{path}:/{name}":
+    post:
+      tags:
+        - upload
+      description: upload image
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: path
+          name: path
+          description: path of image
+          required: true
+          type: string
+        - in: path
+          name: name
+          description: name of image
+          required: true
+          type: string
+        - in: formData
+          name: image
+          type: file
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              uri:
+                type: string
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+  /upload/sendLogo/:
+    post:
+      tags:
+        - upload
+      description: send image
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: formData
+          name: image
+          type: file
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+  "/download/downloadImage/{path}:/{name}":
+    get:
+      tags:
+        - download
+      description: download image
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: path
+          name: path
+          description: path of image
+          required: true
+          type: string
+        - in: path
+          name: name
+          description: name of image
+          required: true
+          type: string
+        - in: header
+          name: x-access-token
+          type: string
+          required: true
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: file
+        "401":
+          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
+
+definitions:
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    required:
+      - code
+      - message
+  AuthData:
+    type: object
+    properties:
+      user_name:
+        type: string
+        example: newuser
+      password:
+        type: string
+        example: new1366
+  ChangePassword:
+    type: object
+    properties:
+      now_password:
+        type: string
+        example: 1234
+      new_password:
+        type: string
+        example: new1366
+      repeat_password:
+        type: string
+        example: new1366
+  AuthResponse:
+    type: object
+    properties:
+      x-access-token:
+        type: string
+      X-Expires-After:
+        $ref: "#/definitions/DateTime"
+  UserRegister:
+    type: object
+    properties:
+      user_name:
+        type: string
+        example: newuser
+      password:
+        type: string
+        example: new1366
+      name:
+        type: string
+        example: Mahdad
+      email:
+        type: string
+        format: email
+        example: mahdad.ghasemian@gmail.com
+  User:
+    type: object
+    properties:
+      user_name:
+        type: string
+        example: newuser
+      x-access-token:
+        type: string
+      X-Expires-After:
+        $ref: "#/definitions/DateTime"
+      name:
+        type: string
+        example: Mahdad
+      email:
+        type: string
+        format: email
+        example: mahdad.ghasemian@gmail.com
+      image_uri:
+        type: string
+        format: uri
+  UserInfo:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Mahdad
+      email:
+        type: string
+        format: email
+        example: mahdad.ghasemian@gmail.com
+      image_uri:
+        type: string
+        format: uri
+
+  DateTime:
+    type: string
+    format: date-time
+    description: "RFC 3339, section 5.6, example: 2017-07-21T17:32:28Z"
+  LicensePlate:
+    type: object
+    description: شماره پلاک خودرو
+    properties:
+      province:
+        type: number
+        minimum: 10
+        maximum: 99
+        example: 22
+      three_part:
+        type: number
+        minimum: 100
+        maximum: 999
+        example: 345
+      city:
+        type: string
+        example: الف
+      two_part:
+        type: number
+        minimum: 10
+        maximum: 99
+        example: 12
+      type:
+        $ref: "#/definitions/LicensePlateType"
+  LicensePlateType:
+    type: string
+    description: انواع پلاک ها
+    enum:
+      - شخصی
+      - تاکسی
+      - عمومی
+      - پلیس
+      - دولتی
+      - سیاسی
+      - معلولین
+      - ترانزیت
+      - کشاورزی
+      - تشریفات
+      - تاریخی
+      - موتورسیکلت
+      - منطقه آزاد
+
+  Car:
+    type: object
+    properties:
+      name:
+        type: string
+        description: نام خودرو
+      license_plate:
+        $ref: "#/definitions/LicensePlate"
+        description: شماره پلاک
+      color:
+        type: string
+      note:
+        type: string
+  Driver:
+    type: object
+    properties:
+      name:
+        type: string
+        description: نام
+      email:
+        type: string
+        format: email
+        description: ایمیل
+      mobile_phone:
+        type: string
+        description: شماره تلفن همراه
+      phone:
+        type: string
+        description: شماره ثابت
+      address:
+        type: string
+        description: آدرس محل زندگی
+      note:
+        type: string
+  Customer:
+    type: object
+    properties:
+      name:
+        type: string
+        description: نام
+      email:
+        type: string
+        format: email
+        description: ایمیل
+      mobile_phone:
+        type: string
+        description: شماره تلفن همراه
+      phone:
+        type: string
+        description: شماره ثابت
+      address:
+        type: string
+        description: آدرس دفتر کار
+      note:
+        type: string
+  Product:
+    type: object
+    properties:
+      name:
+        type: string
+        description: نام ماده
+      unit:
+        type: number
+      color:
+        type: string
+      note:
+        type: string
+
+  Delivery:
+    type: object
+    properties:
+      code:
+        type: string
+      product_id:
+        type: string
+      customer_id:
+        type: string
+      total:
+        type: number
+        description: کل سفارش
+      car_id:
+        type: string
+      driver_id:
+        type: string
+      date_delivery:
+        description: زمان خروج از شرکت و شروع حمل و نقل
+        $ref: "#/definitions/DateTime"
+      status:
+        type: number
+      note:
+        type: string
+
+  Setting:
+    type: object
+    properties:
+      title:
+        type: string
