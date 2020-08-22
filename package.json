@@ -1,6 +1,6 @@
 {
   "name": "nodejs-mongodb-backend-template",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "main": "app.js",
   "engines": {
@@ -13,7 +13,6 @@
     "build-infrastructure-heroku": "npm install --prefix infrastructure",
     "build-database-heroku": "npm install --prefix database",
     "build-restful-server-heroku": "npm install --prefix restful-server",
-    "postinstall": "npm run build-infrastructure-heroku && npm run build-database-heroku && npm run build-restful-server-heroku",
     "start": "node ./app.js",
     "dev": "node -r dotenv/config ./app.js"
   },
