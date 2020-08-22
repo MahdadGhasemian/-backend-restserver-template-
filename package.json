@@ -1,27 +1,20 @@
 {
-  "name": "rest_server",
+  "name": "nodejs-mongodb-backend-template",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node -r dotenv/config ./app.js"
+    "build-infrastructure": "cd ./infrastructure && npm i",
+    "build-database": "cd ./database && npm i",
+    "build-restful-server": "cd ./restful-server && npm i",
+    "preinstall": "npm run build-infrastructure && npm run build-database && npm run build-restful-server",
+    "start": "node ./app.js",
+    "dev": "node -r dotenv/config ./app.js"
   },
-  "author": "",
+  "author": "Mahdad Ghasemian",
   "license": "ISC",
   "dependencies": {
-    "aes-js": "^3.1.2",
-    "axios": "^0.19.0",
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "crypto-js": "^3.1.9-1",
-    "database": "file:../backend-database-template",
-    "express": "^4.16.3",
-    "helpers": "file:../backend-infrastructure-template/helpers",
-    "http-status-codes": "^1.3.0",
-    "jsonwebtoken": "^8.3.0",
-    "logger": "file:../backend-infrastructure-template/logger",
-    "moment": "^2.22.2",
-    "multer": "^1.4.1"
+    "restful-server": "file:restful-server"
   },
   "devDependencies": {
     "dotenv": "^8.2.0"
