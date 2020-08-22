@@ -1,13 +1,13 @@
 {
   "name": "nodejs-mongodb-backend-template",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "app.js",
   "scripts": {
     "build-infrastructure": "cd ./infrastructure && npm i",
     "build-database": "cd ./database && npm i",
     "build-restful-server": "cd ./restful-server && npm i",
-    "preinstall": "npm run build-infrastructure && npm run build-database && npm run build-restful-server",
+    "preinstall": "npm run build-infrastructure && npm run build-restful-server && npm run build-database",
     "start": "node ./app.js",
     "dev": "node -r dotenv/config ./app.js"
   },
